@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nauto.example.cameramodule">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application android:name="com.nauto.example.cameramodule.App"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name">
+
+        <activity android:name="com.nauto.example.cameramodule.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.nauto.example.cameramodule.camera.Camera0" android:process="nauto.camera"/>
+        <service android:name="com.nauto.example.cameramodule.camera.Camera1" android:process="nauto.camera"/>
+
+        <receiver android:name="com.nauto.example.cameramodule.camera.CameraControl0">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.nauto.example.cameramodule.camera.Camera0" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.nauto.example.cameramodule.camera.CameraControl1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.nauto.example.cameramodule.camera.Camera1" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".camera.DriverDistractionModule">
+            <meta-data android:name="camera_id" android:value="1" />
+            <meta-data android:name="format" android:value="YUV_420" />
+            <meta-data android:name="size" android:value="1280x720" />
+            <meta-data android:name="interval" android:value="500" />
+        </service>
+
+        <service android:name=".camera.VehicleDetectionModule">
+            <meta-data android:name="camera_id" android:value="0" />
+            <meta-data android:name="format" android:value="YUV_420" />
+            <meta-data android:name="size" android:value="1280x720" />
+            <meta-data android:name="interval" android:value="500" />
+        </service>
+
+    </application>
+
+</manifest>
